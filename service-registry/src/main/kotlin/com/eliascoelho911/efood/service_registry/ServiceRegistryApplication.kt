@@ -2,8 +2,10 @@ package com.eliascoelho911.efood.service_registry
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer
 
 @SpringBootApplication
+@EnableEurekaServer
 class ServiceRegistryApplication
 
 fun main(args: Array<String>) {

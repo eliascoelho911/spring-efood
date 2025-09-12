@@ -1,0 +1,47 @@
+services:
+  service-registry:
+    build:
+      context: ./service-registry
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - efood-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: orders_user
+      POSTGRES_PASSWORD: orders_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - efood-network
+
+  ms-orders:
+    build:
+      context: ./ms-orders
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://service-registry:8081/eureka
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/orders_db
+      - SPRING_DATASOURCE_USERNAME=orders_user
+      - SPRING_DATASOURCE_PASSWORD=orders_password
+    depends_on:
+      - service-registry
+      - postgres
+    networks:
+      - efood-network
+
+volumes:
+  postgres_data:
+
+networks:
+  efood-network:
+    driver: bridge
