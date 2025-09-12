@@ -1,17 +1,17 @@
 plugins {
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.5.5"
-	id("io.spring.dependency-management") version "1.1.7"
+	alias(libs.plugins.kotlin.jvm)
+	alias(libs.plugins.kotlin.spring)
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
 }
 
 group = "com.eliascoelho911.efood"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1.SNAPSHOT"
 description = "Service Registry"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
 	}
 }
 
@@ -19,25 +19,24 @@ repositories {
 	mavenCentral()
 }
 
-extra["springCloudVersion"] = "2025.0.0"
 
 dependencies {
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation(libs.kotlin.reflect)
+	implementation(libs.spring.cloud.starter.netflix.eureka.server)
+	testImplementation(libs.spring.boot.starter.test)
+	testImplementation(libs.kotlin.test.junit5)
+	testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+		mavenBom(libs.spring.cloud.dependencies.get().toString())
 	}
 }
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
+		freeCompilerArgs.addAll(".Xjsr305=strict")
 	}
 }
 

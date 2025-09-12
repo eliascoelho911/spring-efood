@@ -1,55 +1,53 @@
 plugins {
-	kotlin("jvm") version "1.9.25"
-    kotlin("kapt") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.5.5"
-	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("plugin.jpa") version "1.9.25"
+	alias(libs.plugins.kotlin.jvm)
+	alias(libs.plugins.kotlin.kapt)
+	alias(libs.plugins.kotlin.spring)
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
+	alias(libs.plugins.kotlin.jpa)
 }
 
 group = "com.eliascoelho911.efood"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1.SNAPSHOT"
 description = "MS de pedidos"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
 	}
-
 }
 
 repositories {
 	mavenCentral()
 }
 
-extra["springCloudVersion"] = "2025.0.0"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.mapstruct:mapstruct:1.6.3")
-    kapt("org.mapstruct:mapstruct-processor:1.6.3")
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-	runtimeOnly("org.postgresql:postgresql")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation(libs.spring.boot.starter.data.jpa)
+	implementation(libs.spring.boot.starter.validation)
+	implementation(libs.spring.boot.starter.web)
+	implementation(libs.jackson.module.kotlin)
+	implementation(libs.kotlin.reflect)
+	implementation(libs.mapstruct)
+	kapt(libs.mapstruct.processor)
+	implementation(libs.spring.cloud.starter.netflix.eureka.client)
+	developmentOnly(libs.spring.boot.devtools)
+	developmentOnly(libs.spring.boot.docker.compose)
+	runtimeOnly(libs.postgresql)
+	testImplementation(libs.spring.boot.starter.test)
+	testImplementation(libs.kotlin.test.junit5)
+	testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+		mavenBom(libs.spring.cloud.dependencies.get().toString())
 	}
 }
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
+		freeCompilerArgs.addAll(".Xjsr305=strict")
 	}
 }
 

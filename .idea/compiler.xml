@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="21">
+      <module name="ms-orders" target="21" />
+      <module name="ms-orders.main" target="21" />
+      <module name="ms-orders.test" target="21" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="efood.ms-orders" options="-parameters -proc:none" />
+      <module name="efood.ms-orders.main" options="-parameters -proc:none" />
+      <module name="efood.ms-orders.test" options="-parameters -proc:none" />
+      <module name="efood.service-registry" options="-parameters" />
+      <module name="efood.service-registry.main" options="-parameters" />
+      <module name="efood.service-registry.test" options="-parameters" />
       <module name="ms-orders" options="-parameters -proc:none" />
       <module name="ms-orders.main" options="-parameters -proc:none" />
       <module name="ms-orders.test" options="-parameters -proc:none" />
