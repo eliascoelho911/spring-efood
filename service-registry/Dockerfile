@@ -3,16 +3,20 @@ FROM eclipse-temurin:21-jdk-alpine AS builder
 
 WORKDIR /app
 
-# Copy gradle wrapper and dependencies first for caching
+# Copy gradle wrapper and properties for caching
 COPY gradle/ gradle/
 COPY gradlew .
 COPY gradle.properties .
-COPY service-registry/build.gradle.kts .
+COPY gradle/libs.versions.toml gradle/libs.versions.toml
 RUN chmod +x gradlew
+
+# Copy build script and download dependencies (cached layer)
+COPY service-registry/build.gradle.kts .
+RUN ./gradlew dependencies --no-daemon
 
 # Copy source and build
 COPY service-registry/src/ src/
-RUN ./gradlew build -x test --no-daemon --max-workers=1
+RUN ./gradlew build -x test --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine

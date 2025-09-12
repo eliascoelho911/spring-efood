@@ -11,11 +11,11 @@ COPY gradle/libs.versions.toml gradle/libs.versions.toml
 RUN chmod +x gradlew
 
 # Copy build script and download dependencies (cached layer)
-COPY ms-orders/build.gradle.kts .
+COPY ms-payments/build.gradle.kts .
 RUN ./gradlew dependencies --no-daemon
 
 # Copy source and build
-COPY ms-orders/src/ src/
+COPY ms-payments/src/ src/
 RUN ./gradlew build -x test --no-daemon
 
 # Runtime stage
@@ -27,7 +27,7 @@ WORKDIR /app
 RUN apk add --no-cache curl
 
 # Copy built JAR from builder stage
-COPY --from=builder /app/build/libs/efood-ms-orders.jar app.jar
+COPY --from=builder /app/build/libs/efood-ms-payments.jar app.jar
 
 EXPOSE 8080
 CMD ["sh", "-c", "java -jar app.jar"]

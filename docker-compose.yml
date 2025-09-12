@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: service-registry/Dockerfile
+      cache_from:
+        - service-registry:latest
     ports:
       - "8081:8081"
     healthcheck:
@@ -39,17 +41,13 @@ services:
     build:
       context: .
       dockerfile: api-gateway/Dockerfile
+      cache_from:
+        - api-gateway:latest
     ports:
       - "8082:8080"
     environment:
       - EUREKA_URL=http://service-registry:8081/eureka
       - SPRING_PROFILES_ACTIVE=docker
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
     depends_on:
       service-registry:
         condition: service_healthy
@@ -63,6 +61,8 @@ services:
     build:
       context: .
       dockerfile: ms-orders/Dockerfile
+      cache_from:
+        - ms-orders:latest
     ports:
       - "8080:8080"
     environment:
@@ -71,12 +71,31 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/orders_db
       - SPRING_DATASOURCE_USERNAME=orders_user
       - SPRING_DATASOURCE_PASSWORD=orders_password
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    depends_on:
+      service-registry:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - gradle_cache:/root/.gradle
+      - gradle_build_cache:/app/.gradle
+    networks:
+      - efood-network
+
+  ms-payments:
+    build:
+      context: .
+      dockerfile: ms-payments/Dockerfile
+      cache_from:
+        - ms-payments:latest
+    ports:
+      - "8083:8080"
+    environment:
+      - EUREKA_URL=http://service-registry:8081/eureka
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payments_db
+      - SPRING_DATASOURCE_USERNAME=payments_user
+      - SPRING_DATASOURCE_PASSWORD=payments_password
     depends_on:
       service-registry:
         condition: service_healthy
