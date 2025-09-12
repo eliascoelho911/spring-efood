@@ -1,16 +1,30 @@
-FROM openjdk:21-jdk-slim
+# Build stage
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
 WORKDIR /app
 
+# Copy gradle wrapper and dependencies first for caching
 COPY gradle/ gradle/
 COPY gradlew .
+COPY gradle.properties .
 COPY api-gateway/build.gradle.kts .
 RUN chmod +x gradlew
 
+# Copy source and build with minimal memory
 COPY api-gateway/src/ src/
+RUN ./gradlew build -x test --no-daemon --max-workers=1
 
-RUN ./gradlew build -x test
+# Runtime stage
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Copy built JAR from builder stage
+COPY --from=builder /app/build/libs/efood-api-gateway.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "build/libs/efood-api-gateway.jar"]
+CMD ["sh", "-c", "java -jar app.jar"]
