@@ -1,8 +1,8 @@
 services:
   service-registry:
     build:
-      context: ./service-registry
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: service-registry/Dockerfile
     ports:
       - "8081:8081"
     networks:
@@ -21,14 +21,28 @@ services:
     networks:
       - efood-network
 
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      - EUREKA_URL=http://service-registry:8081/eureka
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - service-registry
+    networks:
+      - efood-network
+
   ms-orders:
     build:
-      context: ./ms-orders
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ms-orders/Dockerfile
     ports:
       - "8080:8080"
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://service-registry:8081/eureka
+      - EUREKA_URL=http://service-registry:8081/eureka
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/orders_db
       - SPRING_DATASOURCE_USERNAME=orders_user

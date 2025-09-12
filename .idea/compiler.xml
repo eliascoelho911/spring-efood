@@ -9,12 +9,21 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="efood.api-gateway" options="-parameters" />
+      <module name="efood.api-gateway.main" options="-parameters" />
+      <module name="efood.api-gateway.test" options="-parameters" />
       <module name="efood.ms-orders" options="-parameters -proc:none" />
       <module name="efood.ms-orders.main" options="-parameters -proc:none" />
       <module name="efood.ms-orders.test" options="-parameters -proc:none" />
       <module name="efood.service-registry" options="-parameters" />
       <module name="efood.service-registry.main" options="-parameters" />
       <module name="efood.service-registry.test" options="-parameters" />
+      <module name="efood.test-spring" options="-parameters -proc:none" />
+      <module name="efood.test-spring.main" options="-parameters -proc:none" />
+      <module name="efood.test-spring.test" options="-parameters -proc:none" />
+      <module name="efood.test-standard" options="-parameters" />
+      <module name="efood.test-standard.main" options="-parameters" />
+      <module name="efood.test-standard.test" options="-parameters" />
       <module name="ms-orders" options="-parameters -proc:none" />
       <module name="ms-orders.main" options="-parameters -proc:none" />
       <module name="ms-orders.test" options="-parameters -proc:none" />

@@ -1,0 +1,1 @@
+- Lembre-se de sempre quando for adicionar alguma dependencia a algum módulo, garantir que ele exista ou seja criado no libs.version.toml

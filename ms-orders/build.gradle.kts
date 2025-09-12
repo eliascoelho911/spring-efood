@@ -47,7 +47,7 @@ dependencyManagement {
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll(".Xjsr305=strict")
+		freeCompilerArgs.addAll("-Xjsr305=strict")
 	}
 }
 
@@ -59,4 +59,13 @@ allOpen {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.jar {
+    enabled = false
+    archiveClassifier = ""
+}
+
+tasks.bootJar {
+    archiveFileName.set("efood-ms-orders.jar")
 }

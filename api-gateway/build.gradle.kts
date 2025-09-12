@@ -7,7 +7,7 @@ plugins {
 
 group = "com.eliascoelho911.efood"
 version = "0.0.1.SNAPSHOT"
-description = "Service Registry"
+description = "Api gateway microservice"
 
 java {
 	toolchain {
@@ -19,10 +19,11 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
+	implementation(libs.spring.cloud.starter.gateway)
 	implementation(libs.kotlin.reflect)
-	implementation(libs.spring.cloud.starter.netflix.eureka.server)
+	implementation(libs.spring.cloud.starter.netflix.eureka.client)
+	developmentOnly(libs.spring.boot.devtools)
 	testImplementation(libs.spring.boot.starter.test)
 	testImplementation(libs.kotlin.test.junit5)
 	testRuntimeOnly(libs.junit.platform.launcher)
@@ -50,5 +51,5 @@ tasks.jar {
 }
 
 tasks.bootJar {
-    archiveFileName.set("efood-service-registry.jar")
+    archiveFileName.set("efood-api-gateway.jar")
 }
