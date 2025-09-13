@@ -64,8 +64,8 @@ services:
       dockerfile: ms-orders/Dockerfile
       cache_from:
         - ms-orders:latest
-    ports:
-      - "8080:8080"
+    deploy:
+      replicas: 1
     environment:
       - EUREKA_URL=http://service-registry:8081/eureka
       - SPRING_PROFILES_ACTIVE=docker
@@ -89,8 +89,8 @@ services:
       dockerfile: ms-payments/Dockerfile
       cache_from:
         - ms-payments:latest
-    ports:
-      - "8083:8080"
+    deploy:
+      replicas: 1
     environment:
       - EUREKA_URL=http://service-registry:8081/eureka
       - SPRING_PROFILES_ACTIVE=docker

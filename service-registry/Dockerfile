@@ -7,7 +7,6 @@ WORKDIR /app
 COPY gradle/ gradle/
 COPY gradlew .
 COPY gradle.properties .
-COPY gradle/libs.versions.toml gradle/libs.versions.toml
 RUN chmod +x gradlew
 
 # Copy build script and download dependencies (cached layer)
