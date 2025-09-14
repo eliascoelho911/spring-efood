@@ -108,6 +108,31 @@ services:
     networks:
       - efood-network
 
+  ms-users:
+    build:
+      context: .
+      dockerfile: ms-users/Dockerfile
+      cache_from:
+        - ms-users:latest
+    deploy:
+      replicas: 1
+    environment:
+      - EUREKA_URL=http://service-registry:8081/eureka
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/users_db
+      - SPRING_DATASOURCE_USERNAME=efood_user
+      - SPRING_DATASOURCE_PASSWORD=efood_password
+    depends_on:
+      service-registry:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - gradle_cache:/root/.gradle
+      - gradle_build_cache:/app/.gradle
+    networks:
+      - efood-network
+
 volumes:
   postgres_data:
   gradle_cache:

@@ -18,6 +18,9 @@
       <module name="efood.ms-payments" options="-parameters -proc:none" />
       <module name="efood.ms-payments.main" options="-parameters -proc:none" />
       <module name="efood.ms-payments.test" options="-parameters -proc:none" />
+      <module name="efood.ms-users" options="-parameters -proc:none" />
+      <module name="efood.ms-users.main" options="-parameters -proc:none" />
+      <module name="efood.ms-users.test" options="-parameters -proc:none" />
       <module name="efood.service-registry" options="-parameters" />
       <module name="efood.service-registry.main" options="-parameters" />
       <module name="efood.service-registry.test" options="-parameters" />

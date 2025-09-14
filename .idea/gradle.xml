@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/api-gateway" />
             <option value="$PROJECT_DIR$/ms-orders" />
             <option value="$PROJECT_DIR$/ms-payments" />
+            <option value="$PROJECT_DIR$/ms-users" />
             <option value="$PROJECT_DIR$/service-registry" />
           </set>
         </option>
