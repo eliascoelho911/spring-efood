@@ -5,6 +5,7 @@ services:
       dockerfile: service-registry/Dockerfile
       cache_from:
         - service-registry:latest
+      shm_size: 128m
     ports:
       - "8081:8081"
     healthcheck:
@@ -16,6 +17,8 @@ services:
     volumes:
       - gradle_cache:/root/.gradle
       - gradle_build_cache:/app/.gradle
+    mem_limit: 1g
+    memswap_limit: 1g
     networks:
       - efood-network
 
@@ -44,6 +47,7 @@ services:
       dockerfile: api-gateway/Dockerfile
       cache_from:
         - api-gateway:latest
+      shm_size: 128m
     ports:
       - "8082:8080"
     environment:
@@ -55,6 +59,8 @@ services:
     volumes:
       - gradle_cache:/root/.gradle
       - gradle_build_cache:/app/.gradle
+    mem_limit: 1g
+    memswap_limit: 1g
     networks:
       - efood-network
 
@@ -64,6 +70,7 @@ services:
       dockerfile: ms-orders/Dockerfile
       cache_from:
         - ms-orders:latest
+      shm_size: 128m
     deploy:
       replicas: 1
     environment:
@@ -80,6 +87,8 @@ services:
     volumes:
       - gradle_cache:/root/.gradle
       - gradle_build_cache:/app/.gradle
+    mem_limit: 1g
+    memswap_limit: 1g
     networks:
       - efood-network
 
@@ -89,6 +98,7 @@ services:
       dockerfile: ms-payments/Dockerfile
       cache_from:
         - ms-payments:latest
+      shm_size: 128m
     deploy:
       replicas: 1
     environment:
@@ -105,6 +115,8 @@ services:
     volumes:
       - gradle_cache:/root/.gradle
       - gradle_build_cache:/app/.gradle
+    mem_limit: 1g
+    memswap_limit: 1g
     networks:
       - efood-network
 
@@ -114,6 +126,7 @@ services:
       dockerfile: ms-users/Dockerfile
       cache_from:
         - ms-users:latest
+      shm_size: 128m
     deploy:
       replicas: 1
     environment:
@@ -130,6 +143,8 @@ services:
     volumes:
       - gradle_cache:/root/.gradle
       - gradle_build_cache:/app/.gradle
+    mem_limit: 1g
+    memswap_limit: 1g
     networks:
       - efood-network
 
